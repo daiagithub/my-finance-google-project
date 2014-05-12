@@ -18,10 +18,9 @@
 
 </div>
 
-<div class="fieldcontain ${hasErrors(bean: incomeInstance, field: 'description', 'error')} required">
+<div class="fieldcontain ${hasErrors(bean: incomeInstance, field: 'description', 'error')}">
 	<label for="description">
-		<g:message code="income.description.label" default="Description" />
-		<span class="required-indicator">*</span>
+		<g:message code="income.description.label" default="Description" />		
 	</label>
 	<g:textArea name="description" value="${incomeInstance?.description}"/>
 
