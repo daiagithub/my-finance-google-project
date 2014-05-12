@@ -1,13 +1,15 @@
 package org.home.myfinance.core.domain
-
-
-
 import static org.springframework.http.HttpStatus.*
 import grails.transaction.Transactional
+
+import org.home.mf.core.events.*
+import org.home.mf.core.services.*
 
 @Transactional(readOnly = true)
 class IncomeController {
 
+
+	def incomeService;
     static allowedMethods = [save: "POST", update: "PUT", delete: "DELETE"]
 
     def index(Integer max) {
@@ -30,13 +32,19 @@ class IncomeController {
             return
         }
 
-        if (incomeInstance.hasErrors()) {
-            respond incomeInstance.errors, view:'create'
-            return
+	println "Calling service..."
+        
+        IncomeCreatedEvent event = incomeService.createIncome(new CreateIncomeEvent(incomeInstance))
+	
+	incomeInstance = event.createIncomeEvent.income
+	
+	
+	if (incomeInstance.hasErrors()) {
+		        	println "Got errors..."
+		            respond incomeInstance.errors, view:'create'
+		            return
         }
-
-        incomeInstance.save flush:true
-
+	println "Event: " + event
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'income.label', default: 'Income'), incomeInstance.id])
