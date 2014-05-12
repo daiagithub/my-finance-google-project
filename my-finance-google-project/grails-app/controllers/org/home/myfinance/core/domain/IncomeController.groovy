@@ -32,25 +32,25 @@ class IncomeController {
             return
         }
 
-	println "Calling service..."
-        
-        IncomeCreatedEvent event = incomeService.createIncome(new CreateIncomeEvent(incomeInstance))
+	   IncomeCreatedEvent event = incomeService.createIncome(new CreateIncomeEvent(incomeInstance))
 	
-	incomeInstance = event.createIncomeEvent.income
+	   incomeInstance = event.createIncomeEvent.income	
 	
-	
-	if (incomeInstance.hasErrors()) {
+	   if (incomeInstance.hasErrors()) {
 		        	println "Got errors..."
 		            respond incomeInstance.errors, view:'create'
 		            return
         }
-	println "Event: " + event
+	   println "Event: " + event
+       println request.withFormat
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.created.message', args: [message(code: 'income.label', default: 'Income'), incomeInstance.id])
-                redirect incomeInstance
+                println "Multipart.............."
+                //redirect incomeInstance
+                redirect action:"index", method:"GET"
             }
-            '*' { respond incomeInstance, [status: CREATED] }
+            '*' { println "*************................."; respond incomeInstance, [status: CREATED] }
         }
     }
 
@@ -75,9 +75,10 @@ class IncomeController {
         request.withFormat {
             form multipartForm {
                 flash.message = message(code: 'default.updated.message', args: [message(code: 'Income.label', default: 'Income'), incomeInstance.id])
+                println "Multipart.............."
                 redirect incomeInstance
-            }
-            '*'{ respond incomeInstance, [status: OK] }
+            }  
+            '*'{ println "**********"; respond incomeInstance, [status: OK] }
         }
     }
 
