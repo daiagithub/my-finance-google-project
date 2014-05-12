@@ -81,19 +81,22 @@
 		</style>
 	</head>
 	<body>
-	        <sec:ifLoggedIn>
-	        	Welcome <sec:username />! 
-	        </sec:ifLoggedIn>
-	        <sec:ifNotLoggedIn>
-		        <oauth:connect provider="google" id="google-connect-link">Google</oauth:connect>
-	        </sec:ifNotLoggedIn>
+        <sec:ifLoggedIn>
+        	Welcome <sec:username />! 
+        </sec:ifLoggedIn>
+	    
+	    <sec:ifNotLoggedIn>
+			<oauth:connect provider="google" id="google-connect-link">Google</oauth:connect>
+		</sec:ifNotLoggedIn>
 	
-			Logged with google?
-			<s2o:ifLoggedInWith provider="google">yes</s2o:ifLoggedInWith>
-			<s2o:ifNotLoggedInWith provider="google">no</s2o:ifNotLoggedInWith>
-		<g:each var="c" in="${grailsApplication.controllerClasses.sort { it.fullName } }">
-								<li class="controller"><g:link controller="${c.logicalPropertyName}">${c.fullName}</g:link></li>
-					</g:each>
-	
+		Logged with google?
+		<s2o:ifLoggedInWith provider="google">yes</s2o:ifLoggedInWith>
+		<s2o:ifNotLoggedInWith provider="google">no</s2o:ifNotLoggedInWith>
+		
+		<br />
+		<sec:ifLoggedIn>
+			<g:link controller="income">Incomes</g:link>
+	    </sec:ifLoggedIn>
+	    
 	</body>
 </html>
