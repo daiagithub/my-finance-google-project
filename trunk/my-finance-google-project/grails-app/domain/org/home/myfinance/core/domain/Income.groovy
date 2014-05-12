@@ -6,9 +6,13 @@ class Income {
 	String description
 	Date dateCreated
 	Date lastUpdated 
-    	String createdBy
+    String createdBy
 	String lastUpdatedBy	
+	
+	static belongsTo = [user: User]
 
     static constraints = {
-    }
+    	description (nullable: true)
+    }   
+   
 }
